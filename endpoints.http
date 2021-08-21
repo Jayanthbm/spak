@@ -1,0 +1,25 @@
+
+## Registraton Route
+# POST http://localhost:4001/register HTTP/1.1
+# content-type: application/json
+
+# {
+#     "name": "jayanth",
+#     "contact":"8892218173",
+#     "address":"Venugopala",
+#     "gender":"male",
+#     "country":"India"
+# }
+
+## Login Route
+
+# POST http://localhost:4001/login HTTP/1.1
+# content-type: application/json
+
+# {
+#     "name":"jayanth"
+# }
+
+GET  http://localhost:4001/search/jayanth HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYyOTUzNzU3OSwiZXhwIjoxNjI5NTQ4Mzc5fQ.eenSmEYNSSFVPs2yIOxGOEsdGu1MrsfEQ1h19nD5sZA
