@@ -36,6 +36,9 @@
         <li class="nav-item" id="nav-logout">
           <a class="nav-link" href="#">Logout</a>
         </li>
+        <li class="nav-item" id="nav-logout-1">
+          <a class="nav-link" href="#">Logout(Without Clearing Token)</a>
+        </li>
       </ul>
   </nav>
 
@@ -154,6 +157,7 @@
       $('#nav-register').hide();
     } else {
       $('#nav-logout').hide();
+      $('#nav-logout-1').hide();
     }
 
     $('#loginForm').submit(function (e) {
@@ -242,7 +246,51 @@
       $("#loading").html(`<br/><div class="spinner-grow text-success" role="status">
       <span class="sr-only">Loading...</span>
       </div>`);
-
+      var form = $("#searchForm");
+      let name = $('#search').val()
+      $('#result').html('');
+      $.ajax({
+        url: `http://localhost:4001/search/${name}`,
+        type: "GET",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem('token')
+        },
+        success: function (result) {
+          $("#loading").html('');
+          if (result.message.length > 0) {
+            let res = result.message;
+            let html = '<br/>';
+            for (let i = 0; i < res.length; i++) {
+              let item = res[i];
+              html += `<div class="card">
+                        <div class="card-header">
+                          Name: ${item.name}
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title">Contact :${item.contact}</h5>
+                          <p class="card-text">Address: ${item.address}</p>
+                          <p class="card-text">Gender: ${item.gender}</p>
+                          <p class="card-text">Country: ${item.country}</p>
+                        </div>
+                      </div>
+                      <br/>`;
+            }
+            $('#result').html(html);
+          } else {
+            $('#result').html("No Users Found");
+          }
+        },
+        error: function (err) {
+          $("#loading").html('');
+          let resHtml = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+         ${err.responseJSON.message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div`;
+          $('#result').html(resHtml);
+        }
+      });
     });
     $("#nav-logout a").click(function () {
       $.ajax({
@@ -253,6 +301,22 @@
         },
         success: function (result) {
           localStorage.removeItem('token');
+          location.reload();
+        },
+        error: function (err) {
+          localStorage.removeItem('token');
+          location.reload();
+        }
+      });
+    });
+    $("#nav-logout-1 a").click(function () {
+      $.ajax({
+        url: "http://localhost:4001/logout",
+        type: "GET",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem('token')
+        },
+        success: function (result) {
           location.reload();
         },
       });

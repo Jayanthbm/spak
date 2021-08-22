@@ -1,6 +1,6 @@
 module.exports = {
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'spak',
+  host: 'remotemysql.com',
+  user: 'Rdwz1eUaZw',
+  password: 'FzJygBSpPB',
+  database: 'Rdwz1eUaZw',
 };

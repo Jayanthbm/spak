@@ -95,15 +95,9 @@ router.get('/search/:query', auth, async (req, res) => {
     let searchQuery = `SELECT * FROM users WHERE name LIKE '%${query}%'`;
     let searchResults = await db.query(searchQuery);
     let results = searchResults.results;
-    if (results.length > 0) {
-      res.send({
-        results: results,
-      });
-    } else {
-      res.status(406).send({
-        message: 'No Results Found',
-      });
-    }
+    res.send({
+      message: results,
+    });
   } catch (error) {
     res.send({
       message: error,
