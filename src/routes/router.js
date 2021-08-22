@@ -7,6 +7,13 @@ const auth = require('../middlewares/auth');
 const { query } = require('express');
 
 const SECRET_KEY = 'jayanth@123';
+
+//Home Route
+
+router.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
 //Register Route
 router.post('/register', async (req, res) => {
   try {
