@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS from CDN-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <title>Spak Test</title>
+</head>
+
+<div class="container">
+  <!-- Nav Bar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Spak Test</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item" id="nav-login">
+          <!-- On CLick Open Login Modal -->
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+        </li>
+        <li class="nav-item" id="nav-register">
+          <!-- On CLick Open Registration Modal -->
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#registrationModal">Register</a>
+        </li>
+        <li class="nav-item" id="nav-logout">
+          <a class="nav-link" href="#">Logout</a>
+        </li>
+      </ul>
+  </nav>
+
+  <!--- Bootstap Jumborton-->
+  <div class="jumbotron">
+    <h1 class="display-4">Spak Test</h1>
+    <p class="lead">
+      This is a simple html page to Login/Regsiter and List Users</p>
+  </div>
+  <!--- Bootstap Jumborton-->
+  <form action="http://localhost:4000/search" method="POST" id="searchForm">
+    <!--- Seacrh Bar-->
+    <div class="form-group">
+      <input type="text" class="form-control" id="search" name="search" placeholder="Search By name/contact" required>
+    </div>
+    <!--- Seacrh Bar-->
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+  <div id="loading"></div>
+  <div id="result"></div>
+
+</div>
+<!---Bootstrap Modal for Login-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="login-loading"></div>
+        <div id="login-results"></div>
+        <form action="http://localhost:4001/login" method="POST" id="loginForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter Name" name="name"
+              id="login-name" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!---Bootstrap Modal for Login-->
+<!--Bootsrap Modal for Registration-->
+<div class="modal fade" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registration</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="reg-loading"></div>
+        <div id="reg-results"></div>
+        <form action="http://localhost:4001/register" method="POST" id="regForm">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" placeholder="Enter Name" name="name" id="reg-name" required>
+          </div>
+          <div class="form-group">
+            <label>Contact</label>
+            <input type="text" class="form-control" placeholder="Enter Contact " name="contact" id="reg-contact"
+              required>
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <textarea class="form-control" rows="3" name="address" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select name="gender" id="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="others">Others</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Country</label>
+            <input type="text" class="form-control" placeholder="Enter Country" name="country" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Bootsrap Modal for Registration-->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+  integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+  integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function () {
+    const token = localStorage.getItem('token') || '';
+    if (token.trim().length > 0) {
+      $('#nav-login').hide();
+      $('#nav-register').hide();
+    } else {
+      $('#nav-logout').hide();
+    }
+
+    $('#loginForm').submit(function (e) {
+      e.preventDefault();
+      $("#login-loading").html(`<div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+      var form = $("#loginForm");
+      let url = form.attr('action');
+      let name = form.find('input[name="name"]').val();
+      $.ajax({
+        url: url,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+          "name": name
+        }),
+        success: function (result) {
+          $('#login-loading').html('');
+          let token = result.token;
+          localStorage.setItem('token', token);
+          location.reload();
+        },
+        error: function (err) {
+          $('#login-loading').html('');
+          let resHtml = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+         ${err.responseJSON.message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div`;
+          $('#login-results').html(resHtml);
+          $('#login-name').val('');
+        }
+      });
+    });
+
+    $('#regForm').submit(function (e) {
+      e.preventDefault();
+      $("#reg-loading").html(`<div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+      $('#reg-results').html('');
+      var form = $("#regForm");
+      let url = form.attr('action');
+      let name = form.find('input[name="name"]').val();
+      let contact = form.find('input[name="contact"]').val();
+      let address = form.find('textarea[name="address"]').val();
+      let gender = $("#gender :selected").val();
+      let country = form.find('input[name="country"]').val();
+      $.ajax({
+        url: url,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+          "name": name,
+          "contact": contact,
+          "address": address,
+          "gender": gender,
+          "country": country
+        }),
+        success: function (result) {
+          $('#reg-loading').html('');
+          alert("Registraion Successful.. Please Login");
+          $('#registrationModal').modal('toggle');
+        },
+        error: function (err) {
+          $('#reg-loading').html('');
+          let resHtml = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+         ${err.responseJSON.message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div`;
+          $('#reg-results').html(resHtml);
+          $('#reg-name').val('');
+          $('#reg-contact').val('');
+        }
+      });
+    });
+
+    $('#searchForm').submit(function (e) {
+      e.preventDefault();
+      $("#loading").html(`<br/><div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+
+    });
+    $("#nav-logout a").click(function () {
+      $.ajax({
+        url: "http://localhost:4001/logout",
+        type: "GET",
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem('token')
+        },
+        success: function (result) {
+          localStorage.removeItem('token');
+          location.reload();
+        },
+      });
+    });
+  });
+</script>
+</body>
+
+</html>

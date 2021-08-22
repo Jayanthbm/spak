@@ -57,6 +57,8 @@ router.post('/login', async (req, res) => {
       let results = loginResults.results;
       if (results.length > 0) {
         let id = results[0].id;
+        let updateQuery = `UPDATE users SET islogged = 1 WHERE id = ${id}`;
+        await db.query(updateQuery);
         const token = jwt.sign(
           {
             userId: id,
@@ -90,9 +92,34 @@ router.post('/login', async (req, res) => {
 router.get('/search/:query', auth, async (req, res) => {
   try {
     let query = req.params.query;
-
+    let searchQuery = `SELECT * FROM users WHERE name LIKE '%${query}%'`;
+    let searchResults = await db.query(searchQuery);
+    let results = searchResults.results;
+    if (results.length > 0) {
+      res.send({
+        results: results,
+      });
+    } else {
+      res.status(406).send({
+        message: 'No Results Found',
+      });
+    }
+  } catch (error) {
     res.send({
-      message: query,
+      message: error,
+    });
+  }
+});
+
+//Logout User and Invalidate JWT
+
+router.get('/logout', auth, async (req, res) => {
+  try {
+    let id = req.userId;
+    let updateQuery = `UPDATE users SET islogged = 0 WHERE id = ${id}`;
+    await db.query(updateQuery);
+    res.send({
+      message: 'Logged Out Successfully',
     });
   } catch (error) {
     res.send({
@@ -100,4 +127,5 @@ router.get('/search/:query', auth, async (req, res) => {
     });
   }
 });
+
 module.exports = router;
